@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teachers page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div>
+    <form method="post" action="/teachers/add">
+        <input type="text" name="surname" placeholder="Фамилия">
+        <input type="text" name="name" placeholder="Имя">
+        <input type="text" name="patronymic" placeholder="Отчество">
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+<div>
+    <h1>Список учителей</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.surname}"></td>
+            <td th:text="${teacher.name}"></td>
+            <td th:text="${teacher.patronymic}"></td>
+            <td><a th:href="@{/teachers/delete/{id}(id=${teacher.id})}">Удалить</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
