@@ -26,13 +26,13 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping(path = "/add-student")
+    @PostMapping(path = "/add")
     public String addNewStudent (@RequestParam String surname, @RequestParam String name, @RequestParam String patronymic, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthday, Model model) {
         Student st = new Student(surname, name, patronymic, birthday);
         studentRepository.save(st);
         Iterable<Student> students = studentRepository.findAll();
         model.addAttribute("students", students);
-        return "redirect:/add-student";
+        return "redirect:/students";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -40,6 +40,11 @@ public class StudentController {
         studentRepository.deleteById(id);
         model.addAttribute("students", studentRepository.findAll());
         return "redirect:/students";
+    }
+
+    @GetMapping("/add-student")
+    public String addForm(Model model) {
+        return "add-student";
     }
 
     @GetMapping

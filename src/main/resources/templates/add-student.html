@@ -10,18 +10,21 @@
 <body>
 
 <div class="row">
-    <div class="col-md-4">.</div>
-    <div class="col-md-4">.col-md-4</div>
-    <div class="col-md-4">.col-md-4</div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+
+        <form method="post" action="/students/add">
+            <input type="text" class="form-control-file" name="surname" placeholder="Фамилия">
+            <input type="text" class="form-control-file" name="name" placeholder="Имя">
+            <input type="text" class="form-control-file" name="patronymic" placeholder="Отчество">
+            <input type="date" class="form-control-file" name="birthday" pattern="yyyy-MM-dd">
+            <button type="submit">Добавить</button>
+        </form>
+
+    </div>
+    <div class="col-md-4"></div>
 </div>
 
-<form method="post" action="/students/add">
-    <input type="text" class="form-control-file" name="surname" placeholder="Фамилия">
-    <input type="text" class="form-control-file" name="name" placeholder="Имя">
-    <input type="text" class="form-control-file" name="patronymic" placeholder="Отчество">
-    <input type="date" class="form-control-file" name="birthday" pattern="yyyy-MM-dd">
-    <button type="submit">Добавить</button>
-</form>
 
 </body>
 </html>
