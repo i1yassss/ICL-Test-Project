@@ -1,7 +1,9 @@
 package com.java.controller;
 
+import com.java.form.TeacherForm;
 import com.java.model.Teacher;
 import com.java.repository.TeacherRepository;
+import com.java.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,29 +16,29 @@ import org.springframework.web.bind.annotation.*;
 public class TeacherController {
 
     @Autowired
-    private TeacherRepository teacherRepository;
+    private TeacherService teacherService;
 
     @PostMapping(path = "/add")
-    public String addNewTeacher (@RequestParam String surname, @RequestParam String name, @RequestParam String patronymic, Model model) {
-        Teacher t = new Teacher(surname, name, patronymic);
-        teacherRepository.save(t);
-        Iterable<Teacher> teachers = teacherRepository.findAll();
-        model.addAttribute("teachers", teachers);
+    public String addNewTeacher (TeacherForm teacherForm) {
+        teacherService.save(teacherForm);
         return "redirect:/teachers";
     }
 
+    @GetMapping("/add-teacher")
+    public String showGroups(Model model) {
+        return "add-teacher";
+    }
 
     @GetMapping(value = "/delete/{id}")
     public String deleteTeacher(@PathVariable("id") Integer id, Model model) {
-        teacherRepository.deleteById(id);
-        model.addAttribute("teachers", teacherRepository.findAll());
+        teacherService.deleteById(id);
+        //model.addAttribute("teachers", teacherService.findAll());
         return "redirect:/teachers";
     }
 
     @GetMapping
     public String teachers(Model model) {
-        Iterable<Teacher> teachers = teacherRepository.findAll();
-        model.addAttribute("teachers", teachers);
+        model.addAttribute("teachers", teacherService.findAll());
         return "teacher";
     }
 }

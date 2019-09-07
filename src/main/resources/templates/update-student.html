@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update student</title>
+    <div th:include="/includes/header::head"></div>
+</head>
+<body>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+            <form method="post" th:action="@{/students/updateStudent/{id}(id=${student.getId()})}">
+                <input type="text" class="form-control-file" name="surname" th:value="${student.getSurname()}">
+                <input type="text" class="form-control-file" name="name" th:value="${student.getName()}">
+                <input type="text" class="form-control-file" name="patronymic" th:value="${student.getPatronymic()}">
+                <input type="date" class="form-control-file" name="birthday" th:value="${student.getBirthday()}">
+                <select class="form-control" name="groupId"/>
+                    <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.getName()}" th:selected="${group.id==student.getGroups()}"></option>
+                </select>
+                <button type="submit">Добавить</button>
+            </form>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+</body>
+</html>

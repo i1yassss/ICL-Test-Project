@@ -3,9 +3,12 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <div th:include="/includes/header::head"></div>
 </head>
 <body>
+<div th:replace="/includes/header::nav"></div>
 <p th:text="'Hello, ' + ${name} + '!'" ></p>
+
 
 </body>
 </html>

@@ -3,10 +3,10 @@
 <head>
     <title>Students page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <div th:include="header::head"></div>
+    <div th:replace="/includes/header::head"></div>
 </head>
 <body>
-
+<div th:replace="/includes/header::nav"></div>
 
 <div class="container">
     <h1>Список студентов</h1>
@@ -19,7 +19,7 @@
             <th scope="col">Дата рождения</th>
             <th scope="col">Группа</th>
             <th scope="col">Удалить</th>
-            <th scope="col">Изменить группу</th>
+            <th scope="col">Редактировать студента</th>
         </tr>
         </thead>
         <tbody>
@@ -28,9 +28,9 @@
             <td th:text="${student.name}"></td>
             <td th:text="${student.patronymic}"></td>
             <td th:text="${student.birthday}"></td>
-            <td th:text="${student.groups}"></td>
+            <td th:text="${student.getGroups().name}"></td>
             <td><a th:href="@{/students/delete/{id}(id=${student.id})}">Удалить</a></td>
-            <td><a th:href="@{/students/update/{id}(id=${student.id})}">Удалить</a></td>
+            <td><a th:href="@{/students/update/{id}(id=${student.id})}">Редактировать</a></td>
         </tr>
         </tbody>
     </table>

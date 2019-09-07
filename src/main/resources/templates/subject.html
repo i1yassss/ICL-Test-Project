@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Предметы</title>
+    <div th:include="/includes/header::head"></div>
 </head>
 <body>
-<div>
-    <form method="post" action="/subjects/add">
-        <input type="text" name="title" placeholder="Предмет">
-        <button type="submit">Добавить</button>
-    </form>
-</div>
-<div>
-    <h1>Список предметов</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Предметы</th>
-            <th>Удалить</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="sub : ${subjects}">
-            <td th:text="${sub.title}"></td>
-            <td><a th:href="@{/subjects/delete/{id}(id=${sub.id})}">Удалить</a></td>
-        </tr>
-        </tbody>
-    </table>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <form method="post" action="/subjects/add">
+                    <input type="text" name="title" placeholder="Предмет">
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-8">
+
+            <div>
+                <h1>Список предметов</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Предметы</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sub : ${subjects}">
+                        <td th:text="${sub.title}"></td>
+                        <td><a th:href="@{/subjects/delete/{id}(id=${sub.id})}">Удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

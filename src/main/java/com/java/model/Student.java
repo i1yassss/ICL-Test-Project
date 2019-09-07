@@ -25,6 +25,10 @@ public class Student {
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    private Groups group;
+
     public Student(){
     }
 
@@ -35,16 +39,12 @@ public class Student {
         this.birthday = birthday;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private Groups groups;
-
     public Groups getGroups() {
-        return groups;
+        return group;
     }
 
-    public void setGroups(Groups groups) {
-        this.groups = groups;
+    public void setGroups(Groups group) {
+        this.group = group;
     }
 
     public Integer getId() {
@@ -95,7 +95,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", patronymic='" + patronymic + '\'' +
                 ", birthday=" + birthday +
-                ", groups=" + groups +
+                ", group=" + group +
                 '}';
     }
 

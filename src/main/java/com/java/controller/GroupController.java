@@ -1,7 +1,9 @@
 package com.java.controller;
 
+import com.java.form.GroupForm;
 import com.java.model.Groups;
 import com.java.repository.GroupRepository;
+import com.java.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,28 +14,25 @@ import org.springframework.web.bind.annotation.*;
 public class GroupController {
 
     @Autowired
-    private GroupRepository groupRepository;
+    private GroupService groupService;
 
     @PostMapping(path = "/add")
-    public String addNewGroup (@RequestParam String groupname,  Model model) {
-        Groups g = new Groups(groupname);
-        groupRepository.save(g);
-        Iterable<Groups> groups = groupRepository.findAll();
-        model.addAttribute("groups", groups);
+    public String addNewGroup (GroupForm groupForm, Model model) {
+        groupService.save(groupForm);
+        model.addAttribute("groups", groupService.findAll());
         return "redirect:/groups";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String deleteGroup(@PathVariable("id") Integer id, Model model) {
-        groupRepository.deleteById(id);
-        model.addAttribute("groups", groupRepository.findAll());
+        groupService.deleteGroupById(id);
+        model.addAttribute("groups", groupService.findAll());
         return "redirect:/groups";
     }
 
     @GetMapping
     public String groups(Model model) {
-        Iterable<Groups> groups = groupRepository.findAll();
-        model.addAttribute("groups", groups);
+        model.addAttribute("groups", groupService.findAll());
         return "group";
     }
 

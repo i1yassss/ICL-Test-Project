@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Subjects {
+public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,9 +14,9 @@ public class Subjects {
 
     private String title;
 
-    public Subjects(){}
+    public Subject(){}
 
-    public Subjects(String title){
+    public Subject(String title){
         this.title = title;
     }
 

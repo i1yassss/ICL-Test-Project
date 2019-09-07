@@ -1,58 +1,64 @@
 package com.java.controller;
 
+import com.java.form.StudentForm;
 import com.java.model.Groups;
 import com.java.model.Student;
 import com.java.repository.GroupRepository;
 import com.java.repository.StudentRepository;
+import com.java.service.GroupService;
 import com.java.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @Controller
-@RequestMapping(path="/students")
+@RequestMapping(path = "/students")
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
+    private GroupService groupService;
 
     @Autowired
     private StudentService studentService;
 
     @PostMapping(path = "/add")
-    public String addNewStudent (@RequestParam String surname, @RequestParam String name, @RequestParam String patronymic, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthday, Model model) {
-        Student st = new Student(surname, name, patronymic, birthday);
-        studentRepository.save(st);
-        Iterable<Student> students = studentRepository.findAll();
-        model.addAttribute("students", students);
+    public String addNewStudent(StudentForm studentForm, Model model) {
+        studentService.save(studentForm);
         return "redirect:/students";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String deleteStudent(@PathVariable("id") Integer id, Model model) {
-        studentRepository.deleteById(id);
-        model.addAttribute("students", studentRepository.findAll());
+        studentService.deleteById(id);
+        model.addAttribute("students", studentService.findAll());
         return "redirect:/students";
     }
 
     @GetMapping("/add-student")
-    public String addForm(Model model) {
+    public String showGroups(Model model) {
+        model.addAttribute("groups", studentService.showGroups());
         return "add-student";
+    }
+
+    @GetMapping("/update/{id}")
+    public String getUpdate(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("groups", groupService.findAll());
+        model.addAttribute("student", studentService.findById(id));
+        return "update-student";
+    }
+
+
+    @PostMapping("/updateStudent/{id}")
+    public String update(@PathVariable("id") Integer id, Model model, StudentForm studentForm) {
+        studentService.update(studentForm, id);
+        return "redirect:/students";
     }
 
     @GetMapping
     public String students(Model model) {
-        Iterable<Student> students = studentRepository.findAll();
-        model.addAttribute("students", students);
-        Iterable<Groups> groups = groupRepository.findAll();
-        model.addAttribute("groups", groups);
+        model.addAttribute("students", studentService.findAll());
+        model.addAttribute("groups", groupService.findAll());
         return "student";
     }
 }

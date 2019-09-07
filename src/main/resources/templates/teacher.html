@@ -3,19 +3,13 @@
 <head>
     <title>Teachers page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <div th:include="/includes/header::head"></div>
 </head>
 <body>
-<div>
-    <form method="post" action="/teachers/add">
-        <input type="text" name="surname" placeholder="Фамилия">
-        <input type="text" name="name" placeholder="Имя">
-        <input type="text" name="patronymic" placeholder="Отчество">
-        <button type="submit">Добавить</button>
-    </form>
-</div>
-<div>
-    <h1>Список учителей</h1>
-    <table>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <h1>Список преподавателей</h1>
+    <table class="table">
         <thead>
         <tr>
             <th>Фамилия</th>

@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Groups</title>
+    <div th:include="/includes/header::head"></div>
 </head>
 <body>
-<div>
-    <form method="post" action="/groups/add">
-        <input type="text" name="groupname" placeholder="Группа">
-        <button type="submit">Добавить</button>
-    </form>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <form method="post" action="/groups/add">
+                    <input type="text" name="groupname" placeholder="Группа">
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <div>
+                <h1>Список групп</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Группы</th>
+                        <th>Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="group : ${groups}">
+                        <td th:text="${group.name}"></td>
+                        <td><a th:href="@{/groups/delete/{id}(id=${group.id})}">Удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
-<div>
-    <h1>Список групп</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Группы</th>
-            <th>Удалить</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="group : ${groups}">
-            <td th:text="${group.name}"></td>
-            <td><a th:href="@{/groups/delete/{id}(id=${group.id})}">Удалить</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+
+
 </body>
 </html>
