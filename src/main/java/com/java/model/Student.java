@@ -26,11 +26,11 @@ public class Student {
     private Date birthday;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Groups group;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SubjectRating> rating;
 
     public Student(){

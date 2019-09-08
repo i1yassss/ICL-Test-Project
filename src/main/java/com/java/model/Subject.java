@@ -12,7 +12,7 @@ public class Subject {
 
     private String title;
 
-    @ManyToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private Set<Teacher> teacher;
 
     public Subject(){}

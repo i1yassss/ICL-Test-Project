@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Best rating</title>
+
+    <div th:include="/includes/header::head"></div>
+</head>
+<body>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-md-4"></div>
+        <div class="col-xs-6 col-md-4">
+            <h3>Лидеры по баллам</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">Средний балл по всем предметам</th>
+                </tr>
+                </thead>
+                <tr th:each="element : ${bestRatings}">
+                    <td th:text="${element.getStudent().getSurname()}"></td>
+                    <td th:text="${element.getStudent().getName()}"></td>
+                    <td th:text="${element.getStudent().getPatronymic()}"></td>
+                    <td th:text="${element.getAverageRating()}"></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-xs-6 col-md-4"></div>
+    </div>
+</div>
+
+</body>
+</html>

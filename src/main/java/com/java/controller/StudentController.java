@@ -1,7 +1,9 @@
 package com.java.controller;
 
+import com.java.dto.StudentRating;
 import com.java.form.StudentForm;
 import com.java.form.SubjectRatingForm;
+import com.java.model.Student;
 import com.java.service.GroupService;
 import com.java.service.StudentService;
 import com.java.service.SubjectRatingService;
@@ -10,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/students")
@@ -34,6 +39,7 @@ public class StudentController {
     }
 
     @GetMapping(value = "/delete/{id}")
+    @DeleteMapping
     public String deleteStudent(@PathVariable("id") Integer id, Model model) {
         studentService.deleteById(id);
         model.addAttribute("students", studentService.findAll());
@@ -90,14 +96,6 @@ public class StudentController {
         return "appoint-teacher";
     }
 
-    /*@PostMapping("/appointTeacher/{id}")
-    public String appointTeacherToSubjectRating(@PathVariable("id") Integer subjectRatingId, Model model){
-        subjectRatingService
-        //model.addAttribute("teachers", studentService.findTeachersBySubjectRatingId(subjectRatingId));
-        //model.addAttribute("currentStudent", studentService.findBySubjectId(subjectRatingId));
-        return "appoint-teacher";
-    }*/
-
     @PostMapping("/appointTeacher/{id}")
     public String appointTeacherToSubjectRating(SubjectRatingForm subjectRatingForm, @PathVariable("id") Integer id, Model model){
         subjectRatingService.addTeacherToSubjectRatingTable(subjectRatingForm, id);
@@ -116,5 +114,23 @@ public class StudentController {
         return "edit-rating";
     }
 
+    @GetMapping("/rating")
+    public String getRating(Model model){
+        Iterable<StudentRating> studentRatings = subjectRatingService.getStudentsAverageRatings();
+        model.addAttribute("studentsRating", studentRatings);
+        return "rating";
+    }
 
+    @GetMapping("/bestRatingStudents")
+    public String getBestRatingStudents(Model model){
+        List<StudentRating> bestRatings = subjectRatingService.bestStudentsByRating(3);
+        model.addAttribute("bestRatings", bestRatings);
+        return "best-students-rating";
+    }
+    @GetMapping("/worstRatingStudents")
+    public String getWorstRatingStudents(Model model){
+        List<StudentRating> worstRatings = subjectRatingService.worstStudentsByRating(3);
+        model.addAttribute("worstRatings", worstRatings);
+        return "worst-students-rating";
+    }
 }

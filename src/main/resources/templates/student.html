@@ -29,7 +29,7 @@
             <td th:text="${student.name}"></td>
             <td th:text="${student.patronymic}"></td>
             <td th:text="${student.birthday}"></td>
-            <td th:text="${student.getGroup().name}"></td>
+            <td th:if="${student.getGroup() != null }" th:text="${student.getGroup().name}"></td>
             <td><a th:href="@{/students/studentSubjects/{id}(id=${student.id})}">Предметы</a></td>
             <td><a th:href="@{/students/delete/{id}(id=${student.id})}">Удалить</a></td>
             <td><a th:href="@{/students/update/{id}(id=${student.id})}">Редактировать</a></td>

@@ -24,7 +24,7 @@
             <td th:text="${currentStudent.getSurname()}"></td>
             <td th:text="${currentStudent.getName()}"></td>
             <td th:text="${currentStudent.getPatronymic()}"></td>
-            <td th:text="${currentStudent.getGroup().getName()}"></td>
+            <td th:if="${currentStudent.getGroup() != null }" th:text="${currentStudent.getGroup().getName()}"></td>
         </tr>
         </tbody>
     </table>
@@ -60,7 +60,7 @@
                 <option th:each="sub : ${allSubjects}" th:value="${sub.id}" th:text="${sub.getTitle()}"></option>
                 </select>
 
-                <button type="submit">Добавить</button>
+                <button type="submit" class="btn btn-default">Добавить</button>
             </form>
         </div>
     </div>

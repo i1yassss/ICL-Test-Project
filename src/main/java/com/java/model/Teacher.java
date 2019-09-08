@@ -25,7 +25,7 @@ public class Teacher {
         this.patronymic = patronymic;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "teacher_subject",
             joinColumns = { @JoinColumn(name = "teacher_id")},

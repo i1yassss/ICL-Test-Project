@@ -23,8 +23,8 @@ public class Groups {
         this.name = name;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @LazyCollection(value = LazyCollectionOption.FALSE)
+    @OneToMany(fetch = FetchType.LAZY)
+    //@LazyCollection(value = LazyCollectionOption.FALSE)
     @JoinColumn(name = "group_id")
     private Set<Student> students;
 
