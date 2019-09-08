@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student subjects</title>
+    <div th:replace="/includes/header::head"></div>
+</head>
+<body>
+<div th:replace="/includes/header::nav"></div>
+
+<div class="container">
+    <h1>Анкета студента</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Группа</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${currentStudent.getSurname()}"></td>
+            <td th:text="${currentStudent.getName()}"></td>
+            <td th:text="${currentStudent.getPatronymic()}"></td>
+            <td th:text="${currentStudent.getGroup().getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <h1>Предметы студента</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Предметы </th>
+                    <th scope="col">Преподаватель</th>
+                    <th scope="col">Оценка</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="studSub : ${studentSubjects}">
+                    <td th:text="${studSub.getSubject().getTitle()}"></td>
+                    <td th:if="${studSub.getTeacher() != null }" th:text="${studSub.getTeacher().getSurname()}"></td>
+                    <td th:if="${studSub.getRating() != null }" th:text="${studSub.getRating()}"></td>
+                    <td><a th:href="@{/students/appointTeacher/{id}(id=${studSub.getId()})}">Назначить преподавателя</a></td>
+                    <td><a th:href="@{/students/editRatingPage/{id}(id=${studSub.getId()})}">Изменить оценку</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6 col-md-4"></div>
+        <div class="col-xs-6 col-md-4">
+            <h1>Назначить предметы студенту</h1>
+            <form method="post" th:action="@{/students/joinSubjects/{id}(id=${currentStudent.getId()})}">
+                <select class="form-control" name="subjectId"/>
+                <option th:each="sub : ${allSubjects}" th:value="${sub.id}" th:text="${sub.getTitle()}"></option>
+                </select>
+
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

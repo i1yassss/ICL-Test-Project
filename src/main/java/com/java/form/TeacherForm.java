@@ -9,6 +9,8 @@ public class TeacherForm {
 
     private String patronymic;
 
+    private Integer subjectId;
+
     public String getSurname() {
         return surname;
     }
@@ -31,5 +33,13 @@ public class TeacherForm {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public Integer getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
     }
 }

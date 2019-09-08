@@ -18,6 +18,7 @@
             <th scope="col">Отчество</th>
             <th scope="col">Дата рождения</th>
             <th scope="col">Группа</th>
+            <th scope="col">Предметы и успеваемость</th>
             <th scope="col">Удалить</th>
             <th scope="col">Редактировать студента</th>
         </tr>
@@ -28,12 +29,14 @@
             <td th:text="${student.name}"></td>
             <td th:text="${student.patronymic}"></td>
             <td th:text="${student.birthday}"></td>
-            <td th:text="${student.getGroups().name}"></td>
+            <td th:text="${student.getGroup().name}"></td>
+            <td><a th:href="@{/students/studentSubjects/{id}(id=${student.id})}">Предметы</a></td>
             <td><a th:href="@{/students/delete/{id}(id=${student.id})}">Удалить</a></td>
             <td><a th:href="@{/students/update/{id}(id=${student.id})}">Редактировать</a></td>
         </tr>
         </tbody>
     </table>
+
 </div>
 </body>
 </html>

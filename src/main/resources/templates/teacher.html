@@ -15,6 +15,7 @@
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Отчество</th>
+            <th>Предметы</th>
             <th>Удалить</th>
         </tr>
         </thead>
@@ -23,6 +24,7 @@
             <td th:text="${teacher.surname}"></td>
             <td th:text="${teacher.name}"></td>
             <td th:text="${teacher.patronymic}"></td>
+            <td><a th:href="@{/teachers/teacherSubjects/{id}(id=${teacher.id})}">Предметы</a></td>
             <td><a th:href="@{/teachers/delete/{id}(id=${teacher.id})}">Удалить</a></td>
         </tr>
         </tbody>

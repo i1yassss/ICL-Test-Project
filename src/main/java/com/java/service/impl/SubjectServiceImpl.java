@@ -7,6 +7,8 @@ import com.java.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SubjectServiceImpl implements SubjectService{
     
@@ -29,6 +31,11 @@ public class SubjectServiceImpl implements SubjectService{
     @Override
     public Iterable<Subject> findAll() {
         return subjectRepository.findAll();
+    }
+
+    @Override
+    public List<Subject> allSubjects() {
+        return (List<Subject>) subjectRepository.findAll();
     }
 
     @Override

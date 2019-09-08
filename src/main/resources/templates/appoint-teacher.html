@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher and rating</title>
+    <div th:include="/includes/header::head"></div>
+</head>
+<body>
+<div th:replace="/includes/header::nav"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-md-4"></div>
+        <div class="col-xs-6 col-md-4">
+            <form method="post" th:action="@{/students/appointTeacher/{id}(id=${subjectRatingId.getId()})}">
+                <select class="form-control" name="teacher"/>
+                    <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.getSurname()}"></option>
+                </select>
+                <button type="submit">Добавить</button>
+            </form>
+            <!--<table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Фамилия </th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="curT : ${teachers}">
+                    <td th:text="${curT.getSurname()}"></td>
+                    <td th:text="${curT.getName()}"></td>
+                    <td th:text="${curT.getPatronymic()}"></td>
+                    <td><a th:href="@{/students/appointTeacherToSubject/{ratingId}/{id}(id=${curT.getId()})}">Назначить преподавателя</a></td>
+                </tr>
+                </tbody>
+            </table>-->
+        </div>
+        <div class="col-xs-6 col-md-4"></div>
+    </div>
+</div>
+
+
+</body>
+</html>

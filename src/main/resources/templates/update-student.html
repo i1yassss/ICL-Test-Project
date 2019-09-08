@@ -19,7 +19,7 @@
                 <input type="text" class="form-control-file" name="patronymic" th:value="${student.getPatronymic()}">
                 <input type="date" class="form-control-file" name="birthday" th:value="${student.getBirthday()}">
                 <select class="form-control" name="groupId"/>
-                    <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.getName()}" th:selected="${group.id==student.getGroups()}"></option>
+                    <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.getName()}" th:selected="${group.id==student.getGroup()}"></option>
                 </select>
                 <button type="submit">Добавить</button>
             </form>

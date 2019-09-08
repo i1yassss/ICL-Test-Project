@@ -1,17 +1,24 @@
 package com.java.service.impl;
 
 import com.java.form.TeacherForm;
+import com.java.model.Subject;
 import com.java.model.Teacher;
+import com.java.repository.SubjectRepository;
 import com.java.repository.TeacherRepository;
 import com.java.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @Override
     public Iterable<Teacher> findAll() {
@@ -36,5 +43,18 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setPatronymic(teacherForm.getPatronymic());
 
         teacherRepository.save(teacher);
+    }
+
+    @Override
+    public void joinToSubject(TeacherForm teacherForm, Integer id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        teacher.getSubject().add(subjectRepository.findById(teacherForm.getSubjectId()).get());
+        teacherRepository.save(teacher);
+    }
+
+    @Override
+    public Iterable<Subject> getTeacherSubjects(Integer id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        return subjectRepository.findAllByTeacher(teacher);
     }
 }

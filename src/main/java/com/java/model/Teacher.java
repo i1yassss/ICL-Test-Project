@@ -1,9 +1,7 @@
 package com.java.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Teacher {
@@ -26,6 +24,14 @@ public class Teacher {
         this.name = name;
         this.patronymic = patronymic;
     }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teacher_subject",
+            joinColumns = { @JoinColumn(name = "teacher_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subject_id")}
+    )
+    private Set<Subject> subject;
 
     public Integer getId() {
         return id;
@@ -57,6 +63,14 @@ public class Teacher {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public Set<Subject> getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Set<Subject> subject) {
+        this.subject = subject;
     }
 
 }

@@ -1,9 +1,7 @@
 package com.java.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Subject {
@@ -13,6 +11,9 @@ public class Subject {
     private Integer id;
 
     private String title;
+
+    @ManyToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Teacher> teacher;
 
     public Subject(){}
 
@@ -35,5 +36,15 @@ public class Subject {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public Set<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Set<Teacher> teacher) {
+        this.teacher = teacher;
+    }
+
+
 
 }

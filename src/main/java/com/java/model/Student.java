@@ -25,9 +25,13 @@ public class Student {
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Groups group;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<SubjectRating> rating;
 
     public Student(){
     }
@@ -37,14 +41,6 @@ public class Student {
         this.name = name;
         this.patronymic = patronymic;
         this.birthday = birthday;
-    }
-
-    public Groups getGroups() {
-        return group;
-    }
-
-    public void setGroups(Groups group) {
-        this.group = group;
     }
 
     public Integer getId() {
@@ -85,6 +81,22 @@ public class Student {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Groups getGroup() {
+        return group;
+    }
+
+    public void setGroup(Groups group) {
+        this.group = group;
+    }
+
+    public Set<SubjectRating> getRating() {
+        return rating;
+    }
+
+    public void setRating(Set<SubjectRating> rating) {
+        this.rating = rating;
     }
 
     @Override

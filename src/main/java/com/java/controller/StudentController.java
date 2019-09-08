@@ -1,12 +1,11 @@
 package com.java.controller;
 
 import com.java.form.StudentForm;
-import com.java.model.Groups;
-import com.java.model.Student;
-import com.java.repository.GroupRepository;
-import com.java.repository.StudentRepository;
+import com.java.form.SubjectRatingForm;
 import com.java.service.GroupService;
 import com.java.service.StudentService;
+import com.java.service.SubjectRatingService;
+import com.java.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,12 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private SubjectRatingService subjectRatingService;
 
     @PostMapping(path = "/add")
     public String addNewStudent(StudentForm studentForm, Model model) {
@@ -48,6 +53,20 @@ public class StudentController {
         return "update-student";
     }
 
+    @GetMapping("/studentSubjects/{id}")
+    public String getStudentSubjects(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("currentStudent", studentService.findById(id));
+        model.addAttribute("studentSubjects", subjectRatingService.findStudentsSubjectsByStudentId(id));
+        model.addAttribute("allSubjects", subjectService.findAll());
+        return "student-subjects";
+    }
+
+    @PostMapping("/joinSubjects/{id}")
+    public String joinStudentToSubject(StudentForm studentForm, @PathVariable("id") Integer id, Model model) {
+        studentService.joinToSubject(studentForm, id);
+        return "redirect:/students/studentSubjects/{id}";
+    }
+
 
     @PostMapping("/updateStudent/{id}")
     public String update(@PathVariable("id") Integer id, Model model, StudentForm studentForm) {
@@ -61,4 +80,41 @@ public class StudentController {
         model.addAttribute("groups", groupService.findAll());
         return "student";
     }
+
+    @GetMapping("/appointTeacher/{id}")
+    public String appointTeacher(@PathVariable("id") Integer subjectRatingId, Model model){
+        model.addAttribute("teachers", studentService.findTeachersBySubjectRatingId(subjectRatingId));
+        //model.addAttribute("currentStudent", studentService.findBySubjectId(subjectRatingId));
+        model.addAttribute("subjectRatingId", subjectRatingService.findById(subjectRatingId));
+
+        return "appoint-teacher";
+    }
+
+    /*@PostMapping("/appointTeacher/{id}")
+    public String appointTeacherToSubjectRating(@PathVariable("id") Integer subjectRatingId, Model model){
+        subjectRatingService
+        //model.addAttribute("teachers", studentService.findTeachersBySubjectRatingId(subjectRatingId));
+        //model.addAttribute("currentStudent", studentService.findBySubjectId(subjectRatingId));
+        return "appoint-teacher";
+    }*/
+
+    @PostMapping("/appointTeacher/{id}")
+    public String appointTeacherToSubjectRating(SubjectRatingForm subjectRatingForm, @PathVariable("id") Integer id, Model model){
+        subjectRatingService.addTeacherToSubjectRatingTable(subjectRatingForm, id);
+        return "redirect:/students/";
+    }
+
+    @PostMapping("/editRating/{id}")
+    public String editRating(SubjectRatingForm subjectRatingForm, @PathVariable("id") Integer id, Model model){
+        subjectRatingService.editRating(subjectRatingForm, id);
+        return "redirect:/students/";
+    }
+
+    @GetMapping("/editRatingPage/{id}")
+    public String editRatingPage(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("rating", subjectRatingService.findById(id));
+        return "edit-rating";
+    }
+
+
 }

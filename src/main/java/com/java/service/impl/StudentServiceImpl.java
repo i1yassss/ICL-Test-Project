@@ -1,16 +1,13 @@
 package com.java.service.impl;
 
 import com.java.form.StudentForm;
-import com.java.model.Groups;
-import com.java.model.Student;
-import com.java.repository.GroupRepository;
-import com.java.repository.StudentRepository;
+import com.java.model.*;
+import com.java.repository.*;
 import com.java.service.GroupService;
 import com.java.service.StudentService;
+import com.java.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -23,6 +20,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private SubjectRatingRepository subjectRatingRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Override
     public Student joinGroup(Student student) {
@@ -42,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Iterable<Groups> showGroups() {
-        return  groupRepository.findAll();
+        return groupRepository.findAll();
     }
 
     @Override
@@ -59,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
         student.setBirthday(studentForm.getBirthday());
 
         Groups group = groupService.findById(studentForm.getGroupId());
-        student.setGroups(group);
+        student.setGroup(group);
 
         studentRepository.save(student);
     }
@@ -73,9 +82,42 @@ public class StudentServiceImpl implements StudentService {
         student.setBirthday(studentForm.getBirthday());
 
         Groups group = groupService.findById(studentForm.getGroupId());
-        student.setGroups(group);
+        student.setGroup(group);
 
         studentRepository.save(student);
     }
+
+    @Override
+    public void joinToSubject(StudentForm studentForm, Integer id) {
+        Student student = studentRepository.findById(id).get();
+        SubjectRating subjectRating = new SubjectRating();
+        subjectRating.setStudent(student);
+        subjectRating.setSubject(subjectRepository.findById(studentForm.getSubjectId()).get());
+        subjectRatingRepository.save(subjectRating);
+    }
+
+    @Override
+    public Iterable<Teacher> findTeachersBySubjectRatingId(Integer subjectRatingId) {
+        SubjectRating subjectRating = subjectRatingRepository.findById(subjectRatingId).get();
+        Subject subject = subjectRepository.findById(subjectRating.getSubject().getId()).get();
+        return subject.getTeacher();
+    }
+
+    @Override
+    public Student findBySubjectId(Integer id) {
+        SubjectRating subjectRating = subjectRatingRepository.findById(id).get();
+        Student student = studentRepository.findById(subjectRating.getStudent().getId()).get();
+        return student;
+    }
+
+/*
+
+    @Override
+    public Iterable<Subject> getStudentsSubjects(Integer id) {
+        Student student = studentRepository.findById(id).get();
+        return subjectRatingRepository.findAllByStudent(student);
+    }
+*/
+
 
 }

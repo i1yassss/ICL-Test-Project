@@ -17,6 +17,8 @@ public class StudentForm {
 
     private Integer groupId;
 
+    private Integer subjectId;
+
 
     public String getSurname() {
         return surname;
@@ -56,5 +58,13 @@ public class StudentForm {
 
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    public Integer getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
     }
 }

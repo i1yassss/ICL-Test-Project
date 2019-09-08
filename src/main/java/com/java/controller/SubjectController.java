@@ -1,8 +1,7 @@
 package com.java.controller;
 
 import com.java.form.SubjectForm;
-import com.java.model.Subject;
-import com.java.repository.SubjectRepository;
+import com.java.service.SubjectRatingService;
 import com.java.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,9 @@ public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private SubjectRatingService subjectRatingService;
 
     @PostMapping(path = "/add")
     public String addNewSubject (SubjectForm subjectForm, Model model) {
